@@ -16,4 +16,8 @@ public class Player {
                 .filter(player.answers::contains)
                 .count();
     }
+
+    public String getNickName() {
+        return nickName;
+    }
 }
