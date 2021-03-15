@@ -52,10 +52,12 @@ public class GaleShapley {
         }
     }
 
+    private List<Player> players;
     private final List<Prefer> group1;
     private final List<Prefer> group2;
 
     public GaleShapley(List<Player> players) {
+        this.players = players;
         this.group1 = players.subList(0, players.size() / 2).stream()
                 .map(player -> new Prefer(player.getNickName(), getPrefers(player, players.subList(players.size() / 2, players.size()))))
                 .collect(toList());
@@ -65,7 +67,12 @@ public class GaleShapley {
     }
 
     public Map<String, String> getMatches() {
-        return start(new HashMap<>()).entrySet().stream().collect(toMap(Map.Entry::getKey, entry -> entry.getValue().getName()));
+        return start(new HashMap<>()).entrySet().stream()
+                .collect(toMap(Map.Entry::getKey, entry -> entry.getValue().getName()));
+    }
+
+    public Map<String, String> getBestMatches() {
+        return players.stream().collect(toMap(Player::getNickName, player -> getPrefers(player, players).get(0)));
     }
 
     private Map<String, Prefer> start(Map<String, Prefer> matchList) {

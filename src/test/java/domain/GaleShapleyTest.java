@@ -25,4 +25,24 @@ class GaleShapleyTest {
         map.put("손너못4", "손너잘2");
         assertThat(galeShapley.getMatches()).containsAllEntriesOf(map);
     }
+
+    @Test
+    void getBestMatches() {
+        GaleShapley galeShapley = new GaleShapley(List.of(
+                new Player("발너못1", List.of("3", "1", "1")),
+                new Player("손너잘2", List.of("2", "2", "2")),
+                new Player("발너잘3", List.of("1", "1", "1")),
+                new Player("손너못4", List.of("2", "2", "2")),
+                new Player("손너못5", List.of("1", "1", "1"))
+        ));
+
+        Map<String, String> map = new HashMap<>();
+        map.put("발너못1", "발너잘3");
+        map.put("발너잘3", "손너못5");
+        map.put("손너못4", "손너잘2");
+        map.put("손너못5", "발너잘3");
+        map.put("손너잘2", "손너못4");
+
+        assertThat(galeShapley.getBestMatches()).containsAllEntriesOf(map);
+    }
 }
